@@ -82,3 +82,5 @@ header h1{margin-top:22px}
 .tbl th,.tbl td{border:2px solid var(--ink);padding:8px 10px;text-align:left;vertical-align:top}
 .tbl th{background:var(--ink);color:#fff;font:900 14px "Arial Black",sans-serif;text-transform:uppercase}
 .tbl td:first-child{font-weight:800;width:42%}
+.detail h4{font:900 17px "Arial Black",sans-serif;margin:20px 0 6px;padding:6px 10px;background:var(--ink);color:#fff;display:inline-block}
+.detail h4+p{margin-top:4px}

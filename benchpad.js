@@ -41,8 +41,20 @@ window.BENCHPAD = {
     dlApk: "Android app", dlBin: "Firmware for ESP32-S3-Zero",
     apkNote: "Install the app like the games: see the <a href=\"{install}\">install guide</a>.",
     binNote: "Merged image (bootloader + partition table + app), flash it at address <code>0x0</code>. Flash mode DIO, 80 MHz, 4 MB.",
-    flashH: "Flashing the dongle with esptool",
-    flashIntro: "You only do this once (and again for a firmware update). The board has only one USB port, which the BenchPad firmware takes over as keyboard + mouse, so the board must be put into <b>download mode</b> by hand first.",
+    flashH: "Flashing the dongle",
+    flashIntro: "You only do this once (and again for a firmware update). The board has only one USB port, which the BenchPad firmware takes over as keyboard + mouse, so the board must be put into <b>download mode</b> by hand first. There are two ways: directly in the browser (nothing to install) or with esptool on the command line.",
+    webH: "Option 1: in the browser (no install)",
+    webIntro: "Uses Espressif's official web flasher <a href=\"https://espressif.github.io/esptool-js/\" target=\"_blank\" rel=\"noopener\">esptool-js</a>. It needs a browser with Web Serial: <b>Chrome, Edge, Opera or another Chromium browser</b> on a computer (not Firefox, not Safari).",
+    web: [
+      ["Download the firmware", "Download <code>BenchPad-fw-1.0.bin</code> from the <a href=\"#downloads\">Downloads</a> above."],
+      ["Put the board into download mode", "Hold the <b>BOOT</b> button, plug the board into the computer (or, if it is already plugged in, tap <b>RESET</b> while holding BOOT), then let go of BOOT. The LED stays off."],
+      ["Open the web flasher and connect", "Open <a href=\"https://espressif.github.io/esptool-js/\" target=\"_blank\" rel=\"noopener\">espressif.github.io/esptool-js</a>, leave the baudrate at 921600 and click <b>Connect</b>. Pick the board in the browser's list (e.g. “USB JTAG/serial debug unit” or a <code>ttyACM</code> / <code>COM</code> port) and confirm. The log should show “ESP32-S3”."],
+      ["Choose the file and address", "Set <b>Flash Address</b> to <code>0x0</code> (important – not 0x1000 or 0x10000) and choose <code>BenchPad-fw-1.0.bin</code> under <b>File</b>. Leave Flash Mode / Frequency / Size as they are."],
+      ["Program", "Click <b>Program</b> and wait until the progress bar is full and the log says it has finished. Then click <b>Disconnect</b>."],
+      ["Start the firmware", "Tap <b>RESET</b> (or unplug and replug the board). The LED now blinks blue or purple: BenchPad is running."]
+    ],
+    cliH: "Option 2: esptool on the command line",
+    tipsH: "Tips",
     flash: [
       ["Install esptool", "You need Python 3. In a terminal run:<pre>pip install esptool</pre>(or <code>pipx install esptool</code>). Check it with <code>esptool version</code>."],
       ["Put the board into download mode", "Hold the <b>BOOT</b> button, plug the board into the computer (or, if it is already plugged in, tap <b>RESET</b> while holding BOOT), then let go of BOOT. The LED stays off."],
@@ -51,8 +63,9 @@ window.BENCHPAD = {
       ["Start the firmware", "Tap <b>RESET</b> (or unplug and replug the board). The LED now blinks blue or purple: BenchPad is running. The serial port disappears, because the board is now a USB keyboard + mouse."]
     ],
     flashTips: [
-      "For a completely clean start you can erase the board first: <code>esptool --chip esp32s3 --port /dev/ttyACM0 erase-flash</code> (download mode again afterwards), then flash as above.",
-      "“No serial data received” or “Failed to connect”: the board is not in download mode. Repeat step 2 and try again.",
+      "For a completely clean start you can erase the board first: in the browser with <b>Erase Flash</b> after Connect, or with <code>esptool --chip esp32s3 --port /dev/ttyACM0 erase-flash</code> (download mode again afterwards), then flash as above.",
+      "“No serial data received” or “Failed to connect”: the board is not in download mode. Put it into download mode again and retry. No port in the browser list usually has the same cause – or a charge-only USB cable.",
+      "Linux (browser and command line): if the port cannot be opened, add yourself to the <code>dialout</code> group (see step 3 of option 2).",
       "Firmware update later: same steps with the new file. Pairings may be lost; then pair the phone again.",
       "Check the download (optional): SHA-256 of BenchPad-fw-1.0.bin is <code>{sha}</code>."
     ],
@@ -116,8 +129,20 @@ window.BENCHPAD = {
     dlApk: "Android-App", dlBin: "Firmware für ESP32-S3-Zero",
     apkNote: "Die App installierst du wie die Spiele: siehe <a href=\"{install}\">Installationsanleitung</a>.",
     binNote: "Komplettes Image (Bootloader + Partitionstabelle + App), an Adresse <code>0x0</code> flashen. Flash-Modus DIO, 80 MHz, 4 MB.",
-    flashH: "Dongle mit esptool flashen",
-    flashIntro: "Das machst du nur einmal (und erneut bei einem Firmware-Update). Das Board hat nur einen USB-Anschluss, den die BenchPad-Firmware als Tastatur + Maus übernimmt. Deshalb musst du das Board vorher von Hand in den <b>Download-Modus</b> bringen.",
+    flashH: "Dongle flashen",
+    flashIntro: "Das machst du nur einmal (und erneut bei einem Firmware-Update). Das Board hat nur einen USB-Anschluss, den die BenchPad-Firmware als Tastatur + Maus übernimmt. Deshalb musst du das Board vorher von Hand in den <b>Download-Modus</b> bringen. Es gibt zwei Wege: direkt im Browser (nichts zu installieren) oder mit esptool auf der Kommandozeile.",
+    webH: "Weg 1: im Browser (ohne Installation)",
+    webIntro: "Nutzt den offiziellen Web-Flasher von Espressif, <a href=\"https://espressif.github.io/esptool-js/\" target=\"_blank\" rel=\"noopener\">esptool-js</a>. Dafür brauchst du einen Browser mit Web Serial: <b>Chrome, Edge, Opera oder einen anderen Chromium-Browser</b> auf einem Computer (nicht Firefox, nicht Safari).",
+    web: [
+      ["Firmware herunterladen", "Lade <code>BenchPad-fw-1.0.bin</code> oben unter <a href=\"#downloads\">Downloads</a> herunter."],
+      ["Board in den Download-Modus bringen", "<b>BOOT</b>-Taste gedrückt halten, Board an den Computer anstecken (oder, wenn es schon steckt, bei gehaltener BOOT-Taste kurz <b>RESET</b> drücken), dann BOOT loslassen. Die LED bleibt aus."],
+      ["Web-Flasher öffnen und verbinden", "Öffne <a href=\"https://espressif.github.io/esptool-js/\" target=\"_blank\" rel=\"noopener\">espressif.github.io/esptool-js</a>, lass die Baudrate auf 921600 und klicke <b>Connect</b>. Wähle das Board in der Liste des Browsers (z. B. „USB JTAG/serial debug unit“ oder einen <code>ttyACM</code>- / <code>COM</code>-Port) und bestätige. Im Log sollte „ESP32-S3“ stehen."],
+      ["Datei und Adresse wählen", "Setze <b>Flash Address</b> auf <code>0x0</code> (wichtig – nicht 0x1000 oder 0x10000) und wähle unter <b>File</b> die Datei <code>BenchPad-fw-1.0.bin</code>. Flash Mode / Frequency / Size so lassen."],
+      ["Programmieren", "Klicke <b>Program</b> und warte, bis der Fortschrittsbalken voll ist und das Log das Ende meldet. Dann <b>Disconnect</b> klicken."],
+      ["Firmware starten", "Kurz <b>RESET</b> drücken (oder Board ab- und wieder anstecken). Die LED blinkt jetzt blau oder lila: BenchPad läuft."]
+    ],
+    cliH: "Weg 2: esptool auf der Kommandozeile",
+    tipsH: "Tipps",
     flash: [
       ["esptool installieren", "Du brauchst Python 3. Im Terminal:<pre>pip install esptool</pre>(oder <code>pipx install esptool</code>). Prüfen mit <code>esptool version</code>."],
       ["Board in den Download-Modus bringen", "<b>BOOT</b>-Taste gedrückt halten, Board an den Computer anstecken (oder, wenn es schon steckt, bei gehaltener BOOT-Taste kurz <b>RESET</b> drücken), dann BOOT loslassen. Die LED bleibt aus."],
@@ -126,8 +151,9 @@ window.BENCHPAD = {
       ["Firmware starten", "Kurz <b>RESET</b> drücken (oder Board ab- und wieder anstecken). Die LED blinkt jetzt blau oder lila: BenchPad läuft. Der serielle Port verschwindet, weil das Board jetzt eine USB-Tastatur + Maus ist."]
     ],
     flashTips: [
-      "Für einen ganz sauberen Start kannst du das Board vorher löschen: <code>esptool --chip esp32s3 --port /dev/ttyACM0 erase-flash</code> (danach wieder Download-Modus), dann wie oben flashen.",
-      "„No serial data received“ oder „Failed to connect“: Das Board ist nicht im Download-Modus. Schritt 2 wiederholen und erneut versuchen.",
+      "Für einen ganz sauberen Start kannst du das Board vorher löschen: im Browser nach Connect mit <b>Erase Flash</b> oder mit <code>esptool --chip esp32s3 --port /dev/ttyACM0 erase-flash</code> (danach wieder Download-Modus), dann wie oben flashen.",
+      "„No serial data received“ oder „Failed to connect“: Das Board ist nicht im Download-Modus. Erneut in den Download-Modus bringen und nochmal versuchen. Erscheint im Browser kein Port in der Liste, ist meist dasselbe die Ursache – oder ein reines Ladekabel.",
+      "Linux (Browser und Kommandozeile): Lässt sich der Port nicht öffnen, dich zur Gruppe <code>dialout</code> hinzufügen (siehe Schritt 3 von Weg 2).",
       "Späteres Firmware-Update: gleiche Schritte mit der neuen Datei. Kopplungen können dabei verloren gehen; dann das Handy neu koppeln.",
       "Download prüfen (optional): SHA-256 von BenchPad-fw-1.0.bin ist <code>{sha}</code>."
     ],

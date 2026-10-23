@@ -148,7 +148,9 @@
       '<h3 id="downloads">' + b.dlH + '</h3><div class="dls">' +
       dlBox(B.apk, "📱 " + b.dlApk, b.apkNote.replace("{install}", href("install.html")), t.dlApp) +
       dlBox(B.bin, "🔌 " + b.dlBin, b.binNote, t.dlFw) + "</div>" +
-      '<h3 id="flash">' + b.flashH + "</h3><p>" + b.flashIntro + "</p>" + steps(b.flash) + list(b.flashTips.map(function (x) { return x.replace("{sha}", B.binSha); })) +
+      '<h3 id="flash">' + b.flashH + "</h3><p>" + b.flashIntro + "</p>" +
+      "<h4>" + b.webH + "</h4><p>" + b.webIntro + "</p>" + steps(b.web) +
+      "<h4>" + b.cliH + "</h4>" + steps(b.flash) + "<h4>" + b.tipsH + "</h4>" + list(b.flashTips.map(function (x) { return x.replace("{sha}", B.binSha); })) +
       "<h3>" + b.useH + "</h3>" + steps(b.use) +
       "<h3>" + b.ledH + "</h3>" + table(b.ledCol, b.ledRows) + table(b.btnCol, b.btnRows) +
       '<div class="warn"><b>⚠ ' + t.riskH + "</b> " + b.risk + "</div></div></main>";

@@ -41,3 +41,10 @@ window.APPS = [
     long:{ en:"Classic Sudoku puzzles with a clean, easy-to-read board. Use notes to track candidates, ask for hints and take on puzzles from beginner to hard, plus a daily challenge.",
            de:"Klassische Sudokus mit klarem, gut lesbarem Brett. Nutze Notizen für Kandidaten, hole dir Tipps und löse Rätsel von Anfänger bis Schwer sowie die tägliche Herausforderung." } }
 ];
+
+// Tools. Each tool has its own page (page:), files live in downloads/.
+window.TOOLS = [
+  { id:"benchpad", name:"BenchPad", version:"1.0", emoji:"🖱️", color:"#2ee6a6", page:"benchpad.html",
+    short:{ en:"Your phone as a wireless trackpad and keyboard for lab instruments. Android app + ESP32-S3 USB dongle.",
+            de:"Dein Handy als kabelloses Trackpad und Tastatur für Messgeräte. Android-App + ESP32-S3-USB-Dongle." } }
+];

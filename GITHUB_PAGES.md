@@ -32,6 +32,15 @@ Everything in this folder is static (no build step). All paths are relative, so 
 * **Texts / German:** UI texts live in `site.js` (`T.en`, `T.de`), app texts in `apps.js`.
 * Then: `git add . && git commit -m "Update" && git push` – Pages redeploys automatically.
 
+## Site structure
+
+* `index.html` – landing page with two buttons: **Games** and **Tools**.
+* `games.html` – all games (from `APPS` in `apps.js`), `app.html?app=<id>` – game details, `install.html` – APK install guide.
+* `tools.html` – all tools (from `TOOLS` in `apps.js`). Each tool links to its own page.
+* `benchpad.html` – BenchPad page; texts (EN + DE) in `benchpad.js`. Downloads: `downloads/BenchPad-<v>.apk` and
+  `downloads/BenchPad-fw-<v>.bin` (merged image for the Waveshare ESP32-S3-Zero, flashed at `0x0`).
+  On a new version update the file names, version and SHA-256 at the top of `benchpad.js` and the version in `TOOLS`.
+
 ## Good to know
 
 * Language: defaults to the visitor's browser language (German or English), remembered after clicking a flag.

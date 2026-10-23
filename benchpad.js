@@ -4,16 +4,26 @@ window.BENCHPAD = {
   apk: "BenchPad-1.0.apk", bin: "BenchPad-fw-1.0.bin", version: "1.0",
   binSha: "08eaf71f990471ccbee27a46aa2233e27dd6c70f427f07ac4b2d4f600ed4d872",
   en: {
-    tag: "Phone → Bluetooth → USB trackpad + keyboard for lab instruments",
-    intro: "Many measurement instruments (spectrum analyzers, oscilloscopes, VNAs …) run Windows or Linux inside, have a screen and a USB socket, but no proper mouse or keyboard at hand. BenchPad turns your Android phone into a wireless trackpad and keyboard for them. It has two parts: a small <b>ESP32-S3 USB dongle</b> that you plug into the instrument, and the <b>BenchPad Android app</b> that talks to the dongle over Bluetooth Low Energy.",
+    tag: "Your phone as a wireless USB trackpad + keyboard for any device",
+    intro: "BenchPad turns your Android phone into a wireless trackpad and keyboard for anything that accepts a USB mouse and keyboard: a PC across the room, a game console, a Raspberry Pi, a TV box, a lab instrument … It has two parts: a small <b>ESP32-S3 USB dongle</b> that you plug into the device, and the <b>BenchPad Android app</b> that talks to the dongle over Bluetooth Low Energy.",
     howH: "How it works",
-    how: "<pre class=\"diagram\">[Android app] ──Bluetooth LE──▶ [ESP32-S3 dongle] ──USB──▶ [Instrument]</pre>To the instrument the dongle is an ordinary USB keyboard + mouse: no drivers, no software to install on the instrument. All keyboard layout logic lives in the app; the dongle only plays the key and mouse reports it receives.",
+    how: "<pre class=\"diagram\">[Android app] ──Bluetooth LE──▶ [ESP32-S3 dongle] ──USB──▶ [PC, console, Pi, TV box, instrument …]</pre>To the device the dongle is an ordinary USB keyboard + mouse: no drivers, no software to install, no Bluetooth needed on the device. It is boot-protocol compatible, so it also works in many BIOS/UEFI setup screens. All keyboard layout logic lives in the app; the dongle only plays the key and mouse reports it receives.",
+    useCasesH: "Where you can use it",
+    useCases: [
+      "<b>PCs and laptops</b> from across the room: a media PC on the TV, a presentation (arrow keys for slides), a computer you don't want to walk over to.",
+      "<b>Game consoles</b> that accept a USB keyboard and mouse: type in browsers, search fields and chats, navigate menus. Whether a game itself supports mouse and keyboard depends on the console and the game.",
+      "<b>Single-board computers</b> such as a Raspberry Pi: first-time setup, a quick fix on a headless box, kiosk and display projects.",
+      "<b>TVs and streaming / Android TV boxes</b> with a USB port: much faster typing of passwords and searches than with the remote.",
+      "<b>Servers, NAS and mini PCs</b> in a rack or cupboard: no need to carry a keyboard and mouse over, also works in BIOS/UEFI setup.",
+      "<b>Measurement and lab instruments</b> (spectrum analyzers, oscilloscopes, VNAs …) that run Windows or Linux inside – what BenchPad was originally built for.",
+      "<b>Machines with an embedded PC:</b> 3D printers, CNC and industrial controllers, digital signage, info terminals, car head units and more – anything with a screen and a USB socket."
+    ],
     featH: "What it can do",
     feat: [
       "<b>Trackpad:</b> move, tap to click, two-finger tap = right click, two-finger scroll (vertical and horizontal), three-finger tap = middle click, tap-and-drag, drag lock, optional button bar, volume keys as mouse buttons. Sensitivity, acceleration and scroll speed are adjustable.",
       "<b>Keys panel:</b> Esc, Tab, Enter, arrows, F1–F12, Home/End, PgUp/PgDn, Del and more; sticky modifiers (Ctrl, Shift, Alt, AltGr, Win: tap = once, double tap = locked) that also work with clicks and scrolling, e.g. Ctrl+scroll to zoom; common combos such as Ctrl+C / Ctrl+V and Ctrl+Alt+Del.",
-      "<b>Text panel:</b> type or paste a longer text on the phone and send it in one go (optionally followed by Enter). US or German keyboard layout (set per instrument), three typing speeds, cancel at any time.",
-      "<b>Live typing:</b> every key you type on the phone's keyboard goes straight to the instrument.",
+      "<b>Text panel:</b> type or paste a longer text on the phone and send it in one go (optionally followed by Enter). US or German keyboard layout (set per dongle), three typing speeds, cancel at any time.",
+      "<b>Live typing:</b> every key you type on the phone's keyboard goes straight to the device.",
       "<b>Several dongles:</b> keeps a list of known dongles with your own names and reconnects automatically to the last one.",
       "<b>Safe on disconnect:</b> if the Bluetooth link drops, the dongle releases all keys and buttons, so nothing stays pressed.",
       "Caps/Num Lock indicators, diagnostics screen, English and German, light and dark theme."
@@ -22,7 +32,7 @@ window.BENCHPAD = {
     need: [
       "<b>An ESP32-S3 board: Waveshare ESP32-S3-Zero</b> (or an identical clone) – see the box below.",
       "An Android phone with Android 10 or newer and Bluetooth LE. On Android 10 and 11, Location must be switched on for Bluetooth scanning (an Android rule; the app does not use your location).",
-      "A USB-C to USB-A adapter or cable, because most instruments have USB-A sockets.",
+      "A USB-C to USB-A adapter or cable, because most devices have USB-A sockets.",
       "A computer (Windows, macOS or Linux) with Python 3 to flash the firmware once."
     ],
     boardH: "Which board is the firmware for?",
@@ -48,16 +58,16 @@ window.BENCHPAD = {
     ],
     useH: "First use",
     use: [
-      ["Plug in the dongle", "Plug the flashed dongle into the instrument (or any PC). It shows up as a USB keyboard + mouse; no driver needed."],
+      ["Plug in the dongle", "Plug the flashed dongle into the device you want to control. It shows up as a USB keyboard + mouse; no driver needed."],
       ["Pair", "A fresh dongle is ready to pair (LED blinks purple). Open the BenchPad app, allow Bluetooth (and on Android 10/11 location), tap your dongle <code>BenchPad-XXXX</code> and confirm pairing."],
-      ["Control", "The LED turns solid green when the phone is connected and the instrument has accepted the USB device. Use the Trackpad, Keys and Text panes."]
+      ["Control", "The LED turns solid green when the phone is connected and the device has accepted the USB device. Use the Trackpad, Keys and Text panes."]
     ],
     ledH: "LED and BOOT button",
     ledRows: [
       ["Blue, short blink every 2 s", "Waiting for the phone (advertising)"],
       ["Purple, fast blink", "Pairing window open – a new phone can pair"],
       ["Green, solid", "Phone connected, USB working"],
-      ["Yellow, solid with short dips", "Phone connected, but USB not (yet) accepted by the instrument"],
+      ["Yellow, solid with short dips", "Phone connected, but USB not (yet) accepted by the device"],
       ["Red, 3 fast flashes", "All pairings deleted"]
     ],
     btnRows: [
@@ -65,20 +75,30 @@ window.BENCHPAD = {
       ["BOOT held 5 s", "Deletes all pairings and opens the pairing window"]
     ],
     ledCol: ["LED", "Meaning"], btnCol: ["Button", "Effect"],
-    risk: "BenchPad is a hobby project, provided as-is without any warranty. Flashing and use at your own risk. Check that USB devices are allowed on your instrument before plugging anything in.",
+    risk: "BenchPad is a hobby project, provided as-is without any warranty. Flashing and use at your own risk. Check that USB devices are allowed on your device (e.g. at work or on lab equipment) before plugging anything in.",
     back: "← Tools"
   },
   de: {
-    tag: "Handy → Bluetooth → USB-Trackpad + Tastatur für Messgeräte",
-    intro: "Viele Messgeräte (Spektrumanalysatoren, Oszilloskope, Netzwerkanalysatoren …) laufen intern mit Windows oder Linux, haben einen Bildschirm und eine USB-Buchse, aber keine vernünftige Maus oder Tastatur zur Hand. BenchPad macht dein Android-Handy zu einem kabellosen Trackpad und einer Tastatur dafür. Es besteht aus zwei Teilen: einem kleinen <b>ESP32-S3-USB-Dongle</b>, den du ins Messgerät steckst, und der <b>BenchPad-Android-App</b>, die per Bluetooth Low Energy mit dem Dongle spricht.",
+    tag: "Dein Handy als kabelloses USB-Trackpad + Tastatur für jedes Gerät",
+    intro: "BenchPad macht dein Android-Handy zu einem kabellosen Trackpad und einer Tastatur für alles, was eine USB-Maus und -Tastatur annimmt: ein PC am anderen Ende des Raums, eine Spielkonsole, ein Raspberry Pi, eine TV-Box, ein Messgerät … Es besteht aus zwei Teilen: einem kleinen <b>ESP32-S3-USB-Dongle</b>, den du in das Gerät steckst, und der <b>BenchPad-Android-App</b>, die per Bluetooth Low Energy mit dem Dongle spricht.",
     howH: "So funktioniert es",
-    how: "<pre class=\"diagram\">[Android-App] ──Bluetooth LE──▶ [ESP32-S3-Dongle] ──USB──▶ [Messgerät]</pre>Für das Messgerät ist der Dongle eine ganz normale USB-Tastatur + Maus: keine Treiber, keine Software auf dem Messgerät. Die gesamte Tastaturlayout-Logik steckt in der App; der Dongle spielt nur die empfangenen Tasten- und Mausdaten ab.",
+    how: "<pre class=\"diagram\">[Android-App] ──Bluetooth LE──▶ [ESP32-S3-Dongle] ──USB──▶ [PC, Konsole, Pi, TV-Box, Messgerät …]</pre>Für das Gerät ist der Dongle eine ganz normale USB-Tastatur + Maus: keine Treiber, keine Software, kein Bluetooth am Gerät nötig. Er ist Boot-Protokoll-kompatibel und funktioniert daher auch in vielen BIOS-/UEFI-Setups. Die gesamte Tastaturlayout-Logik steckt in der App; der Dongle spielt nur die empfangenen Tasten- und Mausdaten ab.",
+    useCasesH: "Wofür du es nutzen kannst",
+    useCases: [
+      "<b>PCs und Laptops</b> vom anderen Ende des Raums: ein Medien-PC am Fernseher, eine Präsentation (Pfeiltasten für die Folien), ein Rechner, zu dem du nicht hinlaufen willst.",
+      "<b>Spielkonsolen</b>, die eine USB-Tastatur und -Maus annehmen: Tippen in Browser, Suchfeldern und Chats, Menüs bedienen. Ob ein Spiel selbst Maus und Tastatur unterstützt, hängt von Konsole und Spiel ab.",
+      "<b>Einplatinencomputer</b> wie der Raspberry Pi: Ersteinrichtung, schnelle Korrekturen an einem Gerät ohne Tastatur, Kiosk- und Anzeigeprojekte.",
+      "<b>Fernseher und Streaming- / Android-TV-Boxen</b> mit USB-Anschluss: Passwörter und Suchen viel schneller eintippen als mit der Fernbedienung.",
+      "<b>Server, NAS und Mini-PCs</b> im Rack oder Schrank: keine Tastatur und Maus mehr hintragen, funktioniert auch im BIOS-/UEFI-Setup.",
+      "<b>Mess- und Laborgeräte</b> (Spektrumanalysatoren, Oszilloskope, Netzwerkanalysatoren …), die intern mit Windows oder Linux laufen – dafür wurde BenchPad ursprünglich gebaut.",
+      "<b>Maschinen mit eingebautem PC:</b> 3D-Drucker, CNC- und Industriesteuerungen, Digital Signage, Infoterminals, Autoradios und mehr – alles mit Bildschirm und USB-Buchse."
+    ],
     featH: "Was es kann",
     feat: [
       "<b>Trackpad:</b> bewegen, Tippen = Klick, Zwei-Finger-Tippen = Rechtsklick, Zwei-Finger-Scrollen (senkrecht und waagerecht), Drei-Finger-Tippen = Mittelklick, Tippen-und-Ziehen, Zieh-Sperre, optionale Tastenleiste, Lautstärketasten als Maustasten. Empfindlichkeit, Beschleunigung und Scrollgeschwindigkeit sind einstellbar.",
       "<b>Tasten-Bereich:</b> Esc, Tab, Enter, Pfeile, F1–F12, Pos1/Ende, Bild↑/Bild↓, Entf und mehr; einrastende Modifier (Strg, Umschalt, Alt, AltGr, Win: einmal tippen = einmal, doppelt = gesperrt), die auch mit Klicks und Scrollen funktionieren, z. B. Strg+Scrollen zum Zoomen; gängige Kombinationen wie Strg+C / Strg+V und Strg+Alt+Entf.",
-      "<b>Text-Bereich:</b> längeren Text auf dem Handy tippen oder einfügen und in einem Rutsch senden (optional mit Enter danach). US- oder deutsches Tastaturlayout (pro Messgerät einstellbar), drei Tippgeschwindigkeiten, jederzeit abbrechbar.",
-      "<b>Live-Tippen:</b> jede Taste, die du auf der Handytastatur tippst, geht direkt ans Messgerät.",
+      "<b>Text-Bereich:</b> längeren Text auf dem Handy tippen oder einfügen und in einem Rutsch senden (optional mit Enter danach). US- oder deutsches Tastaturlayout (pro Dongle einstellbar), drei Tippgeschwindigkeiten, jederzeit abbrechbar.",
+      "<b>Live-Tippen:</b> jede Taste, die du auf der Handytastatur tippst, geht direkt ans Gerät.",
       "<b>Mehrere Dongles:</b> Liste bekannter Dongles mit eigenen Namen, verbindet sich automatisch mit dem zuletzt genutzten.",
       "<b>Sicher bei Verbindungsabbruch:</b> reißt die Bluetooth-Verbindung ab, lässt der Dongle alle Tasten und Maustasten los – nichts bleibt gedrückt.",
       "Anzeige für Feststell-/Num-Taste, Diagnose-Bildschirm, Deutsch und Englisch, helles und dunkles Design."
@@ -87,7 +107,7 @@ window.BENCHPAD = {
     need: [
       "<b>Ein ESP32-S3-Board: Waveshare ESP32-S3-Zero</b> (oder ein baugleicher Klon) – siehe Kasten unten.",
       "Ein Android-Handy mit Android 10 oder neuer und Bluetooth LE. Unter Android 10 und 11 muss für die Bluetooth-Suche der Standort eingeschaltet sein (eine Android-Vorgabe; die App nutzt deinen Standort nicht).",
-      "Einen USB-C-auf-USB-A-Adapter oder ein Kabel, denn die meisten Messgeräte haben USB-A-Buchsen.",
+      "Einen USB-C-auf-USB-A-Adapter oder ein Kabel, denn die meisten Geräte haben USB-A-Buchsen.",
       "Einen Computer (Windows, macOS oder Linux) mit Python 3, um die Firmware einmal aufzuspielen."
     ],
     boardH: "Für welches Board ist die Firmware?",
@@ -113,16 +133,16 @@ window.BENCHPAD = {
     ],
     useH: "Erste Benutzung",
     use: [
-      ["Dongle einstecken", "Den geflashten Dongle ins Messgerät (oder einen beliebigen PC) stecken. Er meldet sich als USB-Tastatur + Maus; kein Treiber nötig."],
+      ["Dongle einstecken", "Den geflashten Dongle in das Gerät stecken, das du bedienen willst. Er meldet sich als USB-Tastatur + Maus; kein Treiber nötig."],
       ["Koppeln", "Ein frischer Dongle ist kopplungsbereit (LED blinkt lila). BenchPad-App öffnen, Bluetooth (und unter Android 10/11 Standort) erlauben, deinen Dongle <code>BenchPad-XXXX</code> antippen und die Kopplung bestätigen."],
-      ["Bedienen", "Die LED leuchtet dauerhaft grün, wenn das Handy verbunden ist und das Messgerät das USB-Gerät angenommen hat. Nutze die Bereiche Trackpad, Tasten und Text."]
+      ["Bedienen", "Die LED leuchtet dauerhaft grün, wenn das Handy verbunden ist und das Gerät den Dongle angenommen hat. Nutze die Bereiche Trackpad, Tasten und Text."]
     ],
     ledH: "LED und BOOT-Taste",
     ledRows: [
       ["Blau, kurzes Blinken alle 2 s", "Wartet auf das Handy"],
       ["Lila, schnelles Blinken", "Kopplungsfenster offen – ein neues Handy kann koppeln"],
       ["Grün, dauerhaft", "Handy verbunden, USB läuft"],
-      ["Gelb, dauerhaft mit kurzen Aussetzern", "Handy verbunden, aber USB vom Messgerät (noch) nicht angenommen"],
+      ["Gelb, dauerhaft mit kurzen Aussetzern", "Handy verbunden, aber USB vom Gerät (noch) nicht angenommen"],
       ["Rot, 3× schnell", "Alle Kopplungen gelöscht"]
     ],
     btnRows: [
@@ -130,7 +150,7 @@ window.BENCHPAD = {
       ["BOOT 5 s halten", "Löscht alle Kopplungen und öffnet das Kopplungsfenster"]
     ],
     ledCol: ["LED", "Bedeutung"], btnCol: ["Taste", "Wirkung"],
-    risk: "BenchPad ist ein Hobbyprojekt, bereitgestellt ohne jegliche Gewährleistung. Flashen und Nutzung auf eigene Gefahr. Prüfe vor dem Einstecken, ob USB-Geräte an deinem Messgerät erlaubt sind.",
+    risk: "BenchPad ist ein Hobbyprojekt, bereitgestellt ohne jegliche Gewährleistung. Flashen und Nutzung auf eigene Gefahr. Prüfe vor dem Einstecken, ob USB-Geräte an deinem Gerät erlaubt sind (z. B. bei der Arbeit oder an Laborgeräten).",
     back: "← Werkzeuge"
   }
 };

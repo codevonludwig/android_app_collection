@@ -141,6 +141,7 @@
       '<main><div class="detail" style="--c:#2ee6a633"><h1>🖱️ BenchPad</h1><p class="ver">' + t.version + " " + B.version + " · " + b.tag + "</p><p>" + b.intro + "</p>" +
       '<div class="row"><a class="btn main" href="#downloads">' + b.dlH + '</a><a class="btn" href="#flash">' + b.flashH + "</a></div>" +
       "<h3>" + b.howH + "</h3><p>" + b.how + "</p>" +
+      "<h3>" + b.useCasesH + "</h3>" + list(b.useCases) +
       "<h3>" + b.featH + "</h3>" + list(b.feat) +
       "<h3>" + b.needH + "</h3>" + list(b.need) +
       '<div class="board"><b>⚠ ' + b.boardH + "</b> " + b.board + "</div>" +

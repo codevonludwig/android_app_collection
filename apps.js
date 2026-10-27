@@ -44,7 +44,7 @@ window.APPS = [
 
 // Tools. Each tool has its own page (page:), files live in downloads/.
 window.TOOLS = [
-  { id:"benchpad", name:"BenchPad", version:"1.0", emoji:"🖱️", color:"#2ee6a6", page:"benchpad.html",
+  { id:"benchpad", name:"BenchPad", version:"1.1", emoji:"🖱️", color:"#2ee6a6", page:"benchpad.html",
     short:{ en:"Your phone as a wireless USB trackpad and keyboard for PCs, consoles, Raspberry Pis, TV boxes, instruments and more. Android app + ESP32-S3 USB dongle.",
             de:"Dein Handy als kabelloses USB-Trackpad und Tastatur für PCs, Konsolen, Raspberry Pis, TV-Boxen, Messgeräte und mehr. Android-App + ESP32-S3-USB-Dongle." } }
 ];

@@ -1,7 +1,8 @@
 // BenchPad page content (English + German). Rendered by site.js on benchpad.html.
-// Files: downloads/BenchPad-1.0.apk (Android app), downloads/BenchPad-fw-1.0.bin (merged firmware image, flash at 0x0).
+// Files: downloads/BenchPad-1.1.apk (Android app), downloads/BenchPad-fw-1.0.bin (merged firmware image, flash at 0x0;
+// unchanged since app 1.0, app 1.1 works with it).
 window.BENCHPAD = {
-  apk: "BenchPad-1.0.apk", bin: "BenchPad-fw-1.0.bin", version: "1.0",
+  apk: "BenchPad-1.1.apk", bin: "BenchPad-fw-1.0.bin", version: "1.1",
   binSha: "08eaf71f990471ccbee27a46aa2233e27dd6c70f427f07ac4b2d4f600ed4d872",
   en: {
     tag: "Your phone as a wireless USB trackpad + keyboard for any device",
@@ -23,7 +24,9 @@ window.BENCHPAD = {
       "<b>Trackpad:</b> move, tap to click, two-finger tap = right click, two-finger scroll (vertical and horizontal), three-finger tap = middle click, tap-and-drag, drag lock, optional button bar, volume keys as mouse buttons. Sensitivity, acceleration and scroll speed are adjustable.",
       "<b>Keys panel:</b> Esc, Tab, Enter, arrows, F1–F12, Home/End, PgUp/PgDn, Del and more; sticky modifiers (Ctrl, Shift, Alt, AltGr, Win: tap = once, double tap = locked) that also work with clicks and scrolling, e.g. Ctrl+scroll to zoom; common combos such as Ctrl+C / Ctrl+V and Ctrl+Alt+Del.",
       "<b>Text panel:</b> type or paste a longer text on the phone and send it in one go (optionally followed by Enter). US or German keyboard layout (set per dongle), three typing speeds, cancel at any time.",
-      "<b>Live typing:</b> every key you type on the phone's keyboard goes straight to the device.",
+      "<b>Live typing:</b> every key you type on the phone's keyboard goes straight to the device – also right on the trackpad screen (portrait): open the keyboard there and type and point at the same time.",
+      "<b>Macros:</b> save sequences of text, keys and combos, pauses and mouse clicks and run them with one tap – from their own tab or as buttons in the keys panel. With repeat count and an optional “ask before running”.",
+      "<b>Your own keys panel:</b> put the key groups in the order you like and hide the ones you don't need.",
       "<b>Several dongles:</b> keeps a list of known dongles with your own names and reconnects automatically to the last one.",
       "<b>Safe on disconnect:</b> if the Bluetooth link drops, the dongle releases all keys and buttons, so nothing stays pressed.",
       "Caps/Num Lock indicators, diagnostics screen, English and German, light and dark theme."
@@ -111,7 +114,9 @@ window.BENCHPAD = {
       "<b>Trackpad:</b> bewegen, Tippen = Klick, Zwei-Finger-Tippen = Rechtsklick, Zwei-Finger-Scrollen (senkrecht und waagerecht), Drei-Finger-Tippen = Mittelklick, Tippen-und-Ziehen, Zieh-Sperre, optionale Tastenleiste, Lautstärketasten als Maustasten. Empfindlichkeit, Beschleunigung und Scrollgeschwindigkeit sind einstellbar.",
       "<b>Tasten-Bereich:</b> Esc, Tab, Enter, Pfeile, F1–F12, Pos1/Ende, Bild↑/Bild↓, Entf und mehr; einrastende Modifier (Strg, Umschalt, Alt, AltGr, Win: einmal tippen = einmal, doppelt = gesperrt), die auch mit Klicks und Scrollen funktionieren, z. B. Strg+Scrollen zum Zoomen; gängige Kombinationen wie Strg+C / Strg+V und Strg+Alt+Entf.",
       "<b>Text-Bereich:</b> längeren Text auf dem Handy tippen oder einfügen und in einem Rutsch senden (optional mit Enter danach). US- oder deutsches Tastaturlayout (pro Dongle einstellbar), drei Tippgeschwindigkeiten, jederzeit abbrechbar.",
-      "<b>Live-Tippen:</b> jede Taste, die du auf der Handytastatur tippst, geht direkt ans Gerät.",
+      "<b>Live-Tippen:</b> jede Taste, die du auf der Handytastatur tippst, geht direkt ans Gerät – auch direkt im Trackpad (Hochformat): Tastatur dort öffnen und gleichzeitig tippen und zeigen.",
+      "<b>Makros:</b> Abfolgen aus Text, Tasten und Kombinationen, Pausen und Mausklicks speichern und mit einem Tipp abspielen – im eigenen Tab oder als Tasten im Tasten-Bereich. Mit Wiederholungen und optionaler Rückfrage vor dem Start.",
+      "<b>Eigener Tasten-Bereich:</b> Tastengruppen in die gewünschte Reihenfolge bringen und nicht benötigte ausblenden.",
       "<b>Mehrere Dongles:</b> Liste bekannter Dongles mit eigenen Namen, verbindet sich automatisch mit dem zuletzt genutzten.",
       "<b>Sicher bei Verbindungsabbruch:</b> reißt die Bluetooth-Verbindung ab, lässt der Dongle alle Tasten und Maustasten los – nichts bleibt gedrückt.",
       "Anzeige für Feststell-/Num-Taste, Diagnose-Bildschirm, Deutsch und Englisch, helles und dunkles Design."

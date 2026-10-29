@@ -39,7 +39,11 @@ window.APPS = [
   { id:"sudoku", name:"Sudoku", version:"1.1", file:"Sudoku-1.1.apk", emoji:"🔟", color:"#14a3c7",
     short:{ en:"Fill the grid so every row, column and box has 1–9.", de:"Fülle das Raster, sodass jede Zeile, Spalte und Box 1–9 enthält." },
     long:{ en:"Classic Sudoku puzzles with a clean, easy-to-read board. Use notes to track candidates, ask for hints and take on puzzles from beginner to hard, plus a daily challenge.",
-           de:"Klassische Sudokus mit klarem, gut lesbarem Brett. Nutze Notizen für Kandidaten, hole dir Tipps und löse Rätsel von Anfänger bis Schwer sowie die tägliche Herausforderung." } }
+           de:"Klassische Sudokus mit klarem, gut lesbarem Brett. Nutze Notizen für Kandidaten, hole dir Tipps und löse Rätsel von Anfänger bis Schwer sowie die tägliche Herausforderung." } },
+  { id:"woertle", name:"Wörtle", version:"1.2", file:"Woertle-1.2.apk", emoji:"🔤", color:"#6aaa64",
+    short:{ en:"Guess the German word in six tries (German only).", de:"Errate das deutsche Wort in sechs Versuchen." },
+    long:{ en:"A German word-guessing game in the style of Wordle (the game is in German). Guess a five- or six-letter word in six tries; green, yellow and gray tiles show how close you are. Play the daily word, which is the same for everyone, or as many free games as you like. Only real base forms count: singular nouns, infinitives and adjectives, no plurals or conjugated forms. Tap any box to place a letter exactly where you think it goes. After each game you see the word's meaning from Wiktionary, your stats, and a share button. With hard mode and a high-contrast mode for colour-blind players.",
+           de:"Ein deutsches Wortratespiel im Stil von Wordle. Errate ein Wort mit fünf oder sechs Buchstaben in sechs Versuchen; grüne, gelbe und graue Kästchen zeigen, wie nah du dran bist. Spiele das Tageswort, das für alle gleich ist, oder so viele freie Runden, wie du möchtest. Es zählen nur echte Grundformen: Substantive im Singular, Verben im Infinitiv und Adjektive, keine Mehrzahl und keine gebeugten Formen. Tippe auf ein beliebiges Kästchen, um einen Buchstaben genau dort einzutragen. Nach jeder Runde siehst du die Bedeutung des Wortes aus dem Wiktionary, deine Statistik und kannst dein Ergebnis teilen. Mit schwerem Modus und einem kontrastreichen Modus für Farbenblinde." } }
 ];
 
 // Tools. Each tool has its own page (page:), files live in downloads/.

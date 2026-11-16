@@ -7,7 +7,7 @@
       sub: "Tap a card, grab the APK, play.",
       landSub: "Free Android games and handy tools, made with Claude Code.",
       games: "Games", gamesSub: "Puzzles, cards and arcade – free APKs for Android.",
-      tools: "Tools", toolsSub: "Useful helpers. For now: BenchPad, a phone-to-USB trackpad + keyboard.",
+      tools: "Tools", toolsSub: "Useful helpers: BenchPad (phone as USB trackpad + keyboard) and PhoneHub (all your phone's stats).",
       toolsH: "Tools", toolsIntro: "Small hobby tools. Some come with hardware – open a tool for the full description and downloads.",
       home: "← Home", backTools: "← Tools", open: "Open", dlApp: "Download app", dlFw: "Download firmware",
       dl: "Download", info: "Info", back: "← All games", version: "Version",
@@ -39,7 +39,7 @@
       sub: "Karte antippen, APK laden, spielen.",
       landSub: "Gratis Android-Spiele und nützliche Werkzeuge, mit Claude Code erstellt.",
       games: "Spiele", gamesSub: "Rätsel, Karten und Arcade – gratis APKs für Android.",
-      tools: "Werkzeuge", toolsSub: "Nützliche Helfer. Bisher: BenchPad, Handy als USB-Trackpad + Tastatur.",
+      tools: "Werkzeuge", toolsSub: "Nützliche Helfer: BenchPad (Handy als USB-Trackpad + Tastatur) und PhoneHub (alle Werte deines Handys).",
       toolsH: "Werkzeuge", toolsIntro: "Kleine Hobby-Werkzeuge. Manche gehören zu Hardware – öffne ein Werkzeug für die ganze Beschreibung und die Downloads.",
       home: "← Startseite", backTools: "← Werkzeuge", open: "Öffnen", dlApp: "App herunterladen", dlFw: "Firmware herunterladen",
       dl: "Herunterladen", info: "Info", back: "← Alle Spiele", version: "Version",
@@ -125,8 +125,11 @@
     document.title = t.toolsH + " – " + t.site;
     root.innerHTML = header(backLink("index.html", t.home) + '<h1>' + t.toolsH + "</h1>" + '<p class="sub">' + t.toolsIntro + "</p>" + noteHtml) +
       '<main><div class="grid">' + window.TOOLS.map(function (a) {
+        var btns = a.page
+          ? '<a class="btn main" href="' + href(a.page) + '">' + t.open + "</a>"
+          : '<a class="btn main" href="' + dl(a) + '" download>' + t.dl + '</a><a class="btn" href="' + href("app.html?app=" + a.id) + '">' + t.info + "</a>";
         return '<article class="card" style="--c:' + a.color + '33"><h2>' + a.emoji + " " + esc(a.name) + '</h2><p class="ver">' + t.version + " " + a.version + "</p>" +
-          "<p>" + esc(a.short[lang]) + '</p><div class="row"><a class="btn main" href="' + href(a.page) + '">' + t.open + "</a></div></article>";
+          (a.page ? "" : shot(a, 1)) + "<p>" + esc(a.short[lang]) + '</p><div class="row">' + btns + "</div></article>";
       }).join("") + "</div></main>";
   } else if (page === "benchpad") {
     var B = window.BENCHPAD, b = B[lang];
@@ -155,10 +158,11 @@
       "<h3>" + b.ledH + "</h3>" + table(b.ledCol, b.ledRows) + table(b.btnCol, b.btnRows) +
       '<div class="warn"><b>⚠ ' + t.riskH + "</b> " + b.risk + "</div></div></main>";
   } else if (page === "app") {
-    var a = apps.filter(function (x) { return x.id === q.get("app"); })[0] || apps[0];
+    var tool = window.TOOLS.filter(function (x) { return x.id === q.get("app") && x.file; })[0];
+    var a = tool || apps.filter(function (x) { return x.id === q.get("app"); })[0] || apps[0];
     document.title = a.name + " – " + t.site;
     var sh = ""; for (var i = 1; i <= 5; i++) sh += shot(a, i);
-    root.innerHTML = header(noteHtml + backLink("games.html", t.back)) +
+    root.innerHTML = header(noteHtml + (tool ? backLink("tools.html", t.backTools) : backLink("games.html", t.back))) +
       '<main><div class="detail" style="--c:' + a.color + '33"><h1>' + a.emoji + " " + esc(a.name) + '</h1><p class="ver">' + t.version + " " + a.version + "</p><p>" + esc(a.long[lang]) +
       '</p><h3>' + t.shots + '</h3><div class="gallery">' + sh + '</div><div class="row"><a class="btn main" href="' + dl(a) + '" download>' + t.dlv + a.version + '</a><a class="btn" href="' + href("install.html") + '">' + t.guideTitle + "</a></div></div></main>";
   } else if (page === "install") {

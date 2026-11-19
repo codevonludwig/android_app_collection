@@ -9,7 +9,7 @@
       games: "Games", gamesSub: "Puzzles, cards and arcade – free APKs for Android.",
       tools: "Tools", toolsSub: "Useful helpers: BenchPad (phone as USB trackpad + keyboard) and PhoneHub (all your phone's stats).",
       toolsH: "Tools", toolsIntro: "Small hobby tools. Some come with hardware – open a tool for the full description and downloads.",
-      home: "← Home", backTools: "← Tools", open: "Open", dlApp: "Download app", dlFw: "Download firmware",
+      home: "Home", apps: "apps", app: "app", h1: "Free apps for Android", backTools: "← Tools", open: "Open", dlApp: "Download app", dlFw: "Download firmware",
       dl: "Download", info: "Info", back: "← All games", version: "Version",
       dlv: "Download v", shots: "Screenshots",
       guideTitle: "How to install", guideSub: "New to apps outside the Play Store? Read this first.",
@@ -30,7 +30,7 @@
         "Menus are named a bit differently on every phone brand. Use the search field in Settings and look for “unknown apps”."
       ],
       riskH: "Own risk", risk: "You install these apps at your own risk. They are hobby projects provided as-is, without any warranty.",
-      guideBtn: "Go to the games"
+      guideBtn: "To the apps"
     },
     de: {
       site: "Claude Code Apps",
@@ -41,7 +41,7 @@
       games: "Spiele", gamesSub: "Rätsel, Karten und Arcade – gratis APKs für Android.",
       tools: "Werkzeuge", toolsSub: "Nützliche Helfer: BenchPad (Handy als USB-Trackpad + Tastatur) und PhoneHub (alle Werte deines Handys).",
       toolsH: "Werkzeuge", toolsIntro: "Kleine Hobby-Werkzeuge. Manche gehören zu Hardware – öffne ein Werkzeug für die ganze Beschreibung und die Downloads.",
-      home: "← Startseite", backTools: "← Werkzeuge", open: "Öffnen", dlApp: "App herunterladen", dlFw: "Firmware herunterladen",
+      home: "Start", apps: "Apps", app: "App", h1: "Gratis-Apps für Android", backTools: "← Werkzeuge", open: "Öffnen", dlApp: "App herunterladen", dlFw: "Firmware herunterladen",
       dl: "Herunterladen", info: "Info", back: "← Alle Spiele", version: "Version",
       dlv: "Herunterladen v", shots: "Screenshots",
       guideTitle: "So installierst du", guideSub: "Neu bei Apps außerhalb des Play Stores? Erst hier lesen.",
@@ -62,115 +62,120 @@
         "Die Menüs heißen je nach Hersteller etwas anders. Nutze die Suche in den Einstellungen und suche nach „unbekannte Apps“."
       ],
       riskH: "Auf eigene Gefahr", risk: "Du installierst diese Apps auf eigene Gefahr. Es sind Hobbyprojekte, bereitgestellt ohne jegliche Gewährleistung.",
-      guideBtn: "Zu den Spielen"
+      guideBtn: "Zu den Apps"
     }
   };
 
-  var FLAG = {
-    de: '<svg viewBox="0 0 5 3" aria-hidden="true"><rect width="5" height="1" fill="#000"/><rect y="1" width="5" height="1" fill="#d00"/><rect y="2" width="5" height="1" fill="#ffce00"/></svg>',
-    en: '<svg viewBox="0 0 60 30" aria-hidden="true"><rect width="60" height="30" fill="#012169"/><path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0L60 30M60 0L0 30" stroke="#c8102e" stroke-width="2.5"/><path d="M30 0V30M0 15H60" stroke="#fff" stroke-width="10"/><path d="M30 0V30M0 15H60" stroke="#c8102e" stroke-width="6"/></svg>'
+  var ICON = {
+    puzzle: '<rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><path d="M17.25 14v6.5M14 17.25h6.5"/>',
+    logic: '<rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+    cards: '<rect x="3.5" y="5.5" width="10" height="14" rx="2" transform="rotate(-8 8.5 12.5)"/><rect x="10.5" y="4.5" width="10" height="14" rx="2" transform="rotate(8 15.5 11.5)"/>',
+    arcade: '<rect x="2" y="7" width="20" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="15" cy="13.8" r=".6"/><circle cx="17.6" cy="11.2" r=".6"/>',
+    tools: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+    install: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/>',
+    dl: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14"/>'
   };
+  function icon(n) { return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[n] + "</svg>"; }
 
   var q = new URLSearchParams(location.search);
-  var lang = q.get("lang") || localStorage.getItem("lang") || ((navigator.language || "en").slice(0, 2) === "de" ? "de" : "en");
+  var stored = null; try { stored = localStorage.getItem("lang"); } catch (e) {}
+  var lang = q.get("lang") || stored || ((navigator.language || "en").slice(0, 2) === "de" ? "de" : "en");
   if (!T[lang]) lang = "en";
-  var t = T[lang], apps = window.APPS;
+  var t = T[lang], CATS = window.CATS, all = window.APPS.concat(window.TOOLS);
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
   function shot(a, n) {
-    return '<div class="shot"><img src="shots/' + a.id + "/" + n + '.png" alt="' + esc(a.name) + " " + n +
-      '" style="color:transparent;font-size:0" onload="if(this.naturalWidth>this.naturalHeight)this.parentNode.classList.add(\'land\')" onerror="this.remove()"></div>';
+    return '<div class="shot"><img loading="lazy" src="shots/' + a.id + "/" + n + '.png" alt="' + esc(a.name) + " " + n +
+      '" onload="if(this.naturalWidth>this.naturalHeight)this.parentNode.classList.add(\'land\')" onerror="this.parentNode.remove()"></div>';
   }
-  function setLang(l) { localStorage.setItem("lang", l); q.set("lang", l); location.search = q.toString(); }
-  window.setLang = setLang;
+  window.setLang = function (l) { try { localStorage.setItem("lang", l); } catch (e) {} q.set("lang", l); location.search = q.toString(); };
 
-  function header(extra) {
-    return '<header><div class="topbar"><a class="brand" href="index.html">✦ ' + t.site + '</a>' +
-      '<div class="flags" role="group" aria-label="Language">' +
-      ["de", "en"].map(function (l) {
-        return '<button type="button" class="flag' + (l === lang ? " on" : "") + '" onclick="setLang(\'' + l + '\')" aria-label="' + (l === "de" ? "Deutsch" : "English") +
-          '" aria-pressed="' + (l === lang) + '" title="' + (l === "de" ? "Deutsch" : "English") + '">' + FLAG[l] + "</button>";
-      }).join("") + '</div></div>' + (extra || "") + "</header>";
-  }
-  var noteHtml = '<p class="note">⚠ ' + esc(t.note) + "</p>";
-  function appLink(a, base) { return base + "?app=" + a.id + "&lang=" + lang; }
   function href(p) { return p + (p.indexOf("?") < 0 ? "?" : "&") + "lang=" + lang; }
   function dl(a) { return "downloads/" + a.file; }
+  function inCat(id) { return all.filter(function (a) { return a.cat === id; }); }
+  function catOf(id) { return CATS.filter(function (c) { return c.id === id; })[0]; }
+  function detailHref(a) { return href(a.page || "app.html?app=" + a.id); }
+
+  // Top bar: brand, optional back link, language switch.
+  function header(back) {
+    return '<header class="top"><div class="bar">' +
+      (back ? '<a class="backl" href="' + href(back[0]) + '"><span aria-hidden="true">‹</span> ' + esc(back[1]) + "</a>"
+            : '<a class="brand" href="' + href("index.html") + '">' + t.site + "</a>") +
+      '<div class="lang" role="group" aria-label="Language">' +
+      ["de", "en"].map(function (l) {
+        return '<button type="button"' + (l === lang ? ' class="on"' : "") + ' onclick="setLang(\'' + l + '\')" aria-pressed="' + (l === lang) +
+          '" aria-label="' + (l === "de" ? "Deutsch" : "English") + '">' + l.toUpperCase() + "</button>";
+      }).join("") + "</div></div></header>";
+  }
+  var foot = '<footer class="foot">' + esc(t.note) + "</footer>";
+  function steps(l) { return '<ol class="steps">' + l.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ol>"; }
+  function list(l) { return "<ul>" + l.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; }
 
   var root = document.getElementById("root");
   var page = document.body.dataset.page;
   document.documentElement.lang = lang;
 
-  function bigLink(p, icon, title, sub, color) {
-    return '<a class="guide big" style="background:' + color + '" href="' + href(p) + '"><span class="gi">' + icon + '</span><span><b>' + title + '</b><small>' + sub + '</small></span><span class="ga">→</span></a>';
-  }
-  function backLink(p, label) { return '<a class="back" href="' + href(p) + '">' + label + "</a>"; }
+  // Old addresses: games.html / tools.html now live on the landing page.
+  if (page === "games" || page === "tools") { location.replace(href(page === "tools" ? "cat.html?c=tools" : "index.html")); return; }
 
   if (page === "index") {
     document.title = t.site;
-    root.innerHTML = header('<h1>' + t.h1a + " <mark>" + t.h1b + "</mark><br>" + t.h1c + "</h1>" +
-      '<p class="sub">' + t.landSub + "</p>" + noteHtml) +
-      '<main><div class="choices">' + bigLink("games.html", "🎮", t.games, t.gamesSub, "#ff5ca8") + bigLink("tools.html", "🛠️", t.tools, t.toolsSub, "#2ee6a6") + "</div></main>";
-  } else if (page === "games") {
-    document.title = t.games + " – " + t.site;
-    root.innerHTML = header(backLink("index.html", t.home) + '<h1>' + t.games + "</h1>" +
-      '<p class="sub">' + t.sub + "</p>" +
-      '<a class="guide" href="' + href("install.html") + '"><span class="gi">📲</span><span><b>' + t.guideTitle + '</b><small>' + t.guideSub + '</small></span><span class="ga">→</span></a>' +
-      noteHtml) +
-      '<main><div class="grid">' + apps.map(function (a) {
-        return '<article class="card" style="--c:' + a.color + '33"><h2>' + a.emoji + " " + esc(a.name) + "</h2>" + shot(a, 1) +
-          "<p>" + esc(a.short[lang]) + '</p><div class="row"><a class="btn main" href="' + dl(a) + '" download>' + t.dl + '</a><a class="btn" href="' + href("app.html?app=" + a.id) + '">' + t.info + "</a></div></article>";
-      }).join("") + "</div></main>";
-  } else if (page === "tools") {
-    document.title = t.toolsH + " – " + t.site;
-    root.innerHTML = header(backLink("index.html", t.home) + '<h1>' + t.toolsH + "</h1>" + '<p class="sub">' + t.toolsIntro + "</p>" + noteHtml) +
-      '<main><div class="grid">' + window.TOOLS.map(function (a) {
-        var btns = a.page
-          ? '<a class="btn main" href="' + href(a.page) + '">' + t.open + "</a>"
-          : '<a class="btn main" href="' + dl(a) + '" download>' + t.dl + '</a><a class="btn" href="' + href("app.html?app=" + a.id) + '">' + t.info + "</a>";
-        return '<article class="card" style="--c:' + a.color + '33"><h2>' + a.emoji + " " + esc(a.name) + '</h2><p class="ver">' + t.version + " " + a.version + "</p>" +
-          (a.page ? "" : shot(a, 1)) + "<p>" + esc(a.short[lang]) + '</p><div class="row">' + btns + "</div></article>";
-      }).join("") + "</div></main>";
+    root.innerHTML = header() + '<main><h1 class="hero">' + t.h1 + '</h1><div class="cats">' +
+      CATS.map(function (c) {
+        var l = inCat(c.id);
+        return '<a class="tile" href="' + href("cat.html?c=" + c.id) + '">' + icon(c.id) + "<b>" + esc(c.name[lang]) + "</b><small>" +
+          l.map(function (a) { return esc(a.name); }).join(", ") + '</small><span class="count">' + l.length + "</span></a>";
+      }).join("") +
+      '<a class="tile alt" href="' + href("install.html") + '">' + icon("install") + "<b>" + t.guideTitle + "</b><small>" + t.guideSub + "</small></a>" +
+      "</div></main>" + foot;
+  } else if (page === "cat") {
+    var c = catOf(q.get("c")) || CATS[0], apps = inCat(c.id);
+    document.title = c.name[lang] + " – " + t.site;
+    root.innerHTML = header(["index.html", t.home]) + '<main><h1 class="pt">' + icon(c.id) + esc(c.name[lang]) + '</h1><div class="list">' +
+      apps.map(function (a) {
+        return '<article class="item"><a class="main" href="' + detailHref(a) + '"><span class="emo" aria-hidden="true">' + a.emoji + "</span><span><b>" + esc(a.name) +
+          ' <i>' + a.version + "</i></b><small>" + esc(a.short[lang]) + "</small></span></a>" +
+          (a.file ? '<a class="get" href="' + dl(a) + '" download aria-label="' + t.dl + " " + esc(a.name) + '" title="' + t.dl + '">' + icon("dl") + "</a>"
+                  : '<a class="get" href="' + detailHref(a) + '" aria-label="' + t.open + " " + esc(a.name) + '" title="' + t.open + '"><span aria-hidden="true">›</span></a>') +
+          "</article>";
+      }).join("") + "</div></main>" + foot;
   } else if (page === "benchpad") {
     var B = window.BENCHPAD, b = B[lang];
     document.title = "BenchPad – " + t.site;
-    var steps = function (l) { return '<ol class="steps">' + l.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ol>"; };
-    var list = function (l) { return "<ul>" + l.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>"; };
-    var table = function (cols, rows) { return '<table class="tbl"><tr><th>' + cols[0] + "</th><th>" + cols[1] + "</th></tr>" + rows.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") + "</table>"; };
+    var table = function (cols, rows) { return '<div class="tblw"><table class="tbl"><tr><th>' + cols[0] + "</th><th>" + cols[1] + "</th></tr>" + rows.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") + "</table></div>"; };
     var dlBox = function (file, label, note, btn) {
       return '<div class="dlbox"><b>' + label + '</b><code>' + file + '</code><small>' + note + '</small><a class="btn main" href="downloads/' + file + '" download>' + btn + "</a></div>";
     };
-    root.innerHTML = header(backLink("tools.html", b.back) + "<br>" + noteHtml) +
-      '<main><div class="detail" style="--c:#2ee6a633"><h1>🖱️ BenchPad</h1><p class="ver">' + t.version + " " + B.version + " · " + b.tag + "</p><p>" + b.intro + "</p>" +
+    root.innerHTML = header(["cat.html?c=tools", catOf("tools").name[lang]]) +
+      '<main class="detail"><h1 class="pt"><span class="emo" aria-hidden="true">🖱️</span>BenchPad</h1><p class="ver">' + t.version + " " + B.version + " · " + b.tag + "</p><p>" + b.intro + "</p>" +
       '<div class="row"><a class="btn main" href="#downloads">' + b.dlH + '</a><a class="btn" href="#flash">' + b.flashH + "</a></div>" +
       "<h3>" + b.howH + "</h3><p>" + b.how + "</p>" +
       "<h3>" + b.useCasesH + "</h3>" + list(b.useCases) +
       "<h3>" + b.featH + "</h3>" + list(b.feat) +
       "<h3>" + b.needH + "</h3>" + list(b.need) +
-      '<div class="board"><b>⚠ ' + b.boardH + "</b> " + b.board + "</div>" +
+      '<div class="board"><b>' + b.boardH + "</b> " + b.board + "</div>" +
       '<h3 id="downloads">' + b.dlH + '</h3><div class="dls">' +
-      dlBox(B.apk, "📱 " + b.dlApk, b.apkNote.replace("{install}", href("install.html")), t.dlApp) +
-      dlBox(B.bin, "🔌 " + b.dlBin, b.binNote, t.dlFw) + "</div>" +
+      dlBox(B.apk, b.dlApk, b.apkNote.replace("{install}", href("install.html")), t.dlApp) +
+      dlBox(B.bin, b.dlBin, b.binNote, t.dlFw) + "</div>" +
       '<h3 id="flash">' + b.flashH + "</h3><p>" + b.flashIntro + "</p>" +
       "<h4>" + b.webH + "</h4><p>" + b.webIntro + "</p>" + steps(b.web) +
       "<h4>" + b.cliH + "</h4>" + steps(b.flash) + "<h4>" + b.tipsH + "</h4>" + list(b.flashTips.map(function (x) { return x.replace("{sha}", B.binSha); })) +
       "<h3>" + b.useH + "</h3>" + steps(b.use) +
       "<h3>" + b.ledH + "</h3>" + table(b.ledCol, b.ledRows) + table(b.btnCol, b.btnRows) +
-      '<div class="warn"><b>⚠ ' + t.riskH + "</b> " + b.risk + "</div></div></main>";
+      '<div class="warn"><b>' + t.riskH + ".</b> " + b.risk + "</div></main>" + foot;
   } else if (page === "app") {
-    var tool = window.TOOLS.filter(function (x) { return x.id === q.get("app") && x.file; })[0];
-    var a = tool || apps.filter(function (x) { return x.id === q.get("app"); })[0] || apps[0];
+    var a = all.filter(function (x) { return x.id === q.get("app") && x.file && x.long; })[0] || window.APPS[0];
     document.title = a.name + " – " + t.site;
     var sh = ""; for (var i = 1; i <= 5; i++) sh += shot(a, i);
-    root.innerHTML = header(noteHtml + (tool ? backLink("tools.html", t.backTools) : backLink("games.html", t.back))) +
-      '<main><div class="detail" style="--c:' + a.color + '33"><h1>' + a.emoji + " " + esc(a.name) + '</h1><p class="ver">' + t.version + " " + a.version + "</p><p>" + esc(a.long[lang]) +
-      '</p><h3>' + t.shots + '</h3><div class="gallery">' + sh + '</div><div class="row"><a class="btn main" href="' + dl(a) + '" download>' + t.dlv + a.version + '</a><a class="btn" href="' + href("install.html") + '">' + t.guideTitle + "</a></div></div></main>";
+    root.innerHTML = header(["cat.html?c=" + a.cat, catOf(a.cat).name[lang]]) +
+      '<main class="detail"><h1 class="pt"><span class="emo" aria-hidden="true">' + a.emoji + "</span>" + esc(a.name) + '</h1><p class="ver">' + t.version + " " + a.version + "</p>" +
+      '<div class="row"><a class="btn main" href="' + dl(a) + '" download>' + icon("dl") + t.dl + '</a><a class="btn" href="' + href("install.html") + '">' + t.guideTitle + "</a></div>" +
+      "<p>" + esc(a.long[lang]) + '</p><h3>' + t.shots + '</h3><div class="gallery">' + sh + "</div></main>" + foot;
   } else if (page === "install") {
     document.title = t.guideH + " – " + t.site;
-    root.innerHTML = header(noteHtml + backLink("games.html", t.back)) +
-      '<main><div class="detail" style="--c:#ffe14d55"><h1>📲 ' + t.guideH + "</h1><p>" + t.guideIntro + '</p><ol class="steps">' +
-      t.steps.map(function (s) { return "<li><b>" + s[0] + "</b><span>" + s[1] + "</span></li>"; }).join("") + "</ol>" +
-      "<h3>" + t.tipsH + "</h3><ul>" + t.tips.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>" +
-      '<div class="warn"><b>⚠ ' + t.riskH + "</b> " + t.risk + '</div><div class="row"><a class="btn main" href="' + href("games.html") + '">' + t.guideBtn + "</a></div></div></main>";
+    root.innerHTML = header(["index.html", t.home]) +
+      '<main class="detail"><h1 class="pt">' + icon("install") + t.guideH + "</h1><p>" + t.guideIntro + "</p>" + steps(t.steps) +
+      "<h3>" + t.tipsH + "</h3>" + list(t.tips) +
+      '<div class="warn"><b>' + t.riskH + ".</b> " + t.risk + '</div><div class="row"><a class="btn main" href="' + href("index.html") + '">' + t.guideBtn + "</a></div></main>" + foot;
   }
 })();
